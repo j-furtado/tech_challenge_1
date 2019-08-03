@@ -1,6 +1,6 @@
-# The quick and dirty solution
+# Solution 1
 
-This solution is supposed to be the fasted way to deploy an Apache Sparks cluster.
+This solution is the fasted way to deploy an Apache Sparks cluster on Azure.
 
 ## Use cases
 
