@@ -1,0 +1,46 @@
+name: $(Build.DefinitionName)_$(Date:yyyyMMdd)$(Rev:_r)
+
+# will disable CI builds
+trigger: 
+  batch: true
+  branches:
+    include:
+    - master
+  paths:
+    include: 
+      - Question/Solution_2/*
+    exclude:
+      - /*
+# will disable PR builds
+pr: none 
+
+variables:
+  ACR_CONNECTION_NAME: 'ACR_CHALLENGE'
+
+stages:
+- stage: CreateContainerImage
+  displayName: Create Container Image
+  jobs:
+  - job: DockerBuild
+    pool: Hosted Ubuntu
+    displayName: Create Docker container Image
+    workspace:
+      clean: all
+    steps:
+    - task: DockerInstaller@0
+      displayName: 'Install Docker 17.09.0-ce'
+      inputs:
+        dockerVersion: 17.09.0-ce
+        releaseType: stable
+    - task: Docker@2
+      displayName: Login to ACR
+      inputs:
+        containerRegistry: $(ACR_CONNECTION_NAME)
+        command: login
+    - task: Docker@2
+      displayName: 'build and push'
+      inputs:
+        containerRegistry: $(ACR_CONNECTION_NAME)
+        repository: sparks-sample
+        Dockerfile: 'Question_1/Solution_2/Dockerfile'
+        tags: '$(Build.BuildId)'
