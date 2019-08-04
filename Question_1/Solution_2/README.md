@@ -6,6 +6,8 @@ This solution builds most of the infrastructure needed to run an Apache Spark cl
 
 An Azure DevOps Build pipeline template was also provided, in order to automate the building of the base Spark container image. This way you can tweak all the parameters and tooling on your Spark workers. It's using the public repo, so you can trigger it by branch release.
 
+![Solution Diagram](imgs/solution_diagram.png "Solution Diagram")
+
 ---
 
 ## Requirements

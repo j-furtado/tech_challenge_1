@@ -4,6 +4,8 @@ This solution is the fasted way to deploy an Apache Sparks cluster on Azure. It 
 
 We build an Azure DataBricks Workspace via Terraform and we script the creation of an Apache Sparks cluster. The script that builds the cluster can be integrated in a CICD pipeline, in order to create the environment automatically on code commit.
 
+![Solution Diagram](imgs/solution_diagram.png "Solution Diagram")
+
 ---
 
 ## Requirements
