@@ -15,6 +15,7 @@ trigger:
 pr: none 
 
 variables:
+  ACR_SERVER: 'azcontregxpto.azurecr.io'
   ACR_CONNECTION_NAME: 'ACR_CHALLENGE'
   IMAGE_NAME: 'spark-sample'
 
@@ -42,6 +43,6 @@ stages:
       displayName: Build container image and push it to ACR
       inputs:
         containerRegistry: $(ACR_CONNECTION_NAME)
-        repository: $(IMAGE_NAME)
+        repository: $(ACR_SERVER)/$(IMAGE_NAME)
         Dockerfile: 'Question_1/Solution_2/Dockerfile'
         tags: '$(Build.BuildId)'
