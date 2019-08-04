@@ -69,7 +69,7 @@ variable "worker_pool_name" {
 
 variable "worker_node_count" {
   description = "Number of worker nodes for your container management platform. Has to be at least > 0."
-  default = "1"
+  default = "2"
 }
 
 variable "worker_dns_prefix" {
