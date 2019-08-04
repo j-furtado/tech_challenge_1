@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-spark
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-spark
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: sample-spark
+    spec:
+      containers:
+      - name: spark-sample
+        image: azcontregxpto.azurecr.io/spark-sample:latest
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: acr-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-spark
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: sample-spark
