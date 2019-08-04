@@ -15,7 +15,7 @@ trigger:
 pr: none 
 
 variables:
-  ACR_CONNECTION_NAME: 'Test'
+  ACR_CONNECTION_NAME: 'ACR_CHALLENGE'
 
 stages:
 - stage: CreateContainerImage
@@ -35,7 +35,7 @@ stages:
     - task: Docker@2
       displayName: Login to ACR
       inputs:
-        containerRegistry: '$(ACR_CONNECTION_NAME)'
+        containerRegistry: $(ACR_CONNECTION_NAME)
         command: login
     - task: Docker@2
       displayName: 'build and push'
