@@ -16,6 +16,7 @@ pr: none
 
 variables:
   ACR_CONNECTION_NAME: 'ACR_CHALLENGE'
+  IMAGE_NAME: 'spark-sample'
 
 stages:
 - stage: CreateContainerImage
@@ -41,6 +42,6 @@ stages:
       displayName: Build container image and push it to ACR
       inputs:
         containerRegistry: $(ACR_CONNECTION_NAME)
-        repository: sparks-sample
+        repository: $(IMAGE_NAME)
         Dockerfile: 'Question_1/Solution_2/Dockerfile'
         tags: '$(Build.BuildId)'
