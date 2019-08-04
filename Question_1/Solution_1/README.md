@@ -1,41 +1,41 @@
-# Solution 1
+# Solution 1 - Azure DataBricks
 
-This solution is the fasted way to deploy an Apache Sparks cluster on Azure.
+This solution is the fasted way to deploy an Apache Sparks cluster on Azure. It can be used for simple Proof-of-concept solutions or when your analytics engine is the least important part. It could also be used for cheap, disposable infrastructure for non-production environments.
 
-## Use cases
+We build an Azure DataBricks Workspace via Terraform and we script the creation of an Apache Sparks cluster. The script that builds the cluster can be integrated in a CICD pipeline, in order to create the environment automatically on code commit.
 
-Can be used for simple Proof-of-concept solutions or when your analytics engine is the least important part. It could also be used for cheap, disposable infrastructure for non-production environments.
+---
 
 ## Requirements
 
 * Azure account
 * Python 3.X
-* PowerShell
+* PowerShell and Azure CLI
 * [Terraform 0.12.X](https://www.terraform.io/)
+
+---
 
 ## Setup
 
-### Tool setup
-
-#### PowerShell
+### PowerShell
 
 You will need to download the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
 
-#### Terraform
+### Terraform
 
 You will need to install [Terraform](https://www.terraform.io/downloads.html)
 
-### Credentials setup
+### Credentials
 
-To use Azure in a script you need to generate CLI credentials, that will include the Azure Tenant ID, Azure Subscription ID, Azure App ID and Azure App Secret.
+To use Azure in a script you need to generate CLI credentials, that will include the *Azure Tenant ID*, *Azure Subscription ID*, *Azure App ID* and *Azure App Secret*.
 
-To start, on your PowerShell console, run the following command:
+On your PowerShell console, run the following command:
 
 ```powershell
 az login
 ```
 
-It will open a browser window where you will input your username, and password, where you have your Azure account setup. If it is successful, it will show something like this:
+It will open a browser window where you will use your username and password, for your Azure account. If it is successful, it will show something like this:
 
 ```powershell
 You have logged in. Now let us find all the subscriptions to which you have access...
@@ -55,9 +55,9 @@ You have logged in. Now let us find all the subscriptions to which you have acce
 ]
 ```
 
-Save the `id` field and `tenantId`. The `id` represents your Subscription ID and the `tenantId` represents your Tenant ID.
+Save the `id` field and `tenantId`. The `id` represents your *Subscription ID* and the `tenantId` represents your *Tenant ID.*
 
-Then you'll need to create the App Service Principal. Run the following command:
+Then you'll need to create the *App Service Principal*. Run the following command:
 
 ```powershell
 az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<subscription_id>"
@@ -75,24 +75,26 @@ If the operation is sucessful, the output will be something like this:
 }
 ```
 
-Save the `appId` field and `password`. The `appId` represents your Application ID and the `password` represents your Application Secret.
+Save the `appId` field and `password`. The `appId` represents your *Application ID* and the `password` represents your *Application Secret*.
 
 Create a file with the following format:
 
 ```ini
-subscription_id = "Subscription ID"
-client_id = "Application ID"
-client_secret = "Password"
-tenant_id = "Tenant ID"
+subscription_id = "<Subscription ID>"
+client_id = "<Application ID>"
+client_secret = "<Password>"
+tenant_id = "<Tenant ID>"
 ```
 
-To test the credentials, you can run the following command:
+To test the credentials you can run the following command:
 
 ```powershell
 az login --service-principal -u <client_id> -p <client_secret> --tenant <tenant_id>
 ```
 
-**Note:** You may need to set the owner of the application. This should not be needed in an AD environment but if you're not able to access your Databricks workspace after it being created, add your user as owner of the application. To do that, go to Azure Active Directory > Enterprise Applications, Select All Applications and type your application name. On the owners tab, add your user to it.
+**Note:** You may need to set yourself as the owner of the application. This should not be needed in an environment with Azure AD but if you're not able to access your resources after they are created, add your user as owner of the application. To do that, go to `Azure Active Directory > Enterprise Applications`, select *All Applications* and type your application name. On the owners tab, add your user to it.
+
+---
 
 ## Creating the Azure Infrastructure
 
@@ -104,7 +106,7 @@ Initialize and download the modules:
 terraform init
 ```
 
-Test your configuration before deploying it. It will ask for the user you want to set as the owner of the resource. This is a work around since my account doesn't have AD configured:
+Test your configuration before deploying it. Don't forget to pass it the credentials file:
 
 ```powershell
 terraform plan -var-file=<credentials_file>
@@ -205,7 +207,7 @@ To login, press the Launch Workspace. It may take a while to open or fail the fi
 
 If you can't login because your user is not allowed, you may need to either add your user as the owner for your application (refer to the Credentials setup) or add your user to the resource as an owner or contributor.
 
-Once you login, you should see the Data Bricks dashboard:
+Once you login, you should see the DataBricks dashboard:
 
 ![Azure DataBricks Dashboard](imgs/databricks_dash.png "Azure DataBricks Dashboard")
 
@@ -219,7 +221,7 @@ Press the **Generate New Token** and don't forget to *save the token*. You will 
 
 ## Cluster creation
 
-For the next part, we are going to use Python. I recommend you use Virtual Environments, to minimize package conflicts on your system.
+For the next part, we are going to use Python. The use of Virtual Environments is recommended in order to minimize package conflicts on your system.
 
 To install the required packages, use the `requirements.txt` file:
 
