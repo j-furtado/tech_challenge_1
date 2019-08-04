@@ -22,7 +22,7 @@ stages:
   displayName: Create Container Image
   jobs:
   - job: DockerBuild
-    pool: Hosted Ubuntu
+    pool: Hosted Ubuntu 1604
     displayName: Create Docker container Image
     workspace:
       clean: all
