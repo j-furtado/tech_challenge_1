@@ -50,6 +50,6 @@ stages:
       displayName: Push image to ACR
       inputs:
         containerRegistry: $(ACR_CONNECTION_NAME)
-        repository: $(ACR_URL)/$(IMAGE_NAME)
+        repository: $(IMAGE_NAME)
         command: 'push'
         tags: '$(Build.BuildId)'
