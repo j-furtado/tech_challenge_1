@@ -38,7 +38,7 @@ stages:
         containerRegistry: $(ACR_CONNECTION_NAME)
         command: login
     - task: Docker@2
-      displayName: 'build and push'
+      displayName: Build container image and push it to ACR
       inputs:
         containerRegistry: $(ACR_CONNECTION_NAME)
         repository: sparks-sample
