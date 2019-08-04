@@ -1,8 +1,8 @@
 FROM openjdk:14-jdk
 
 # Install maven
-RUN apt-get update
-RUN apt-get install -y maven
+RUN apt update
+RUN apt install -y maven
 
 WORKDIR /code
 
