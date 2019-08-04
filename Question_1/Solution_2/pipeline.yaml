@@ -15,7 +15,7 @@ trigger:
 pr: none 
 
 variables:
-  ACR_CONNECTION_NAME: 'ACR_CHALLENGE'
+  ACR_CONNECTION_NAME: 'Test'
 
 stages:
 - stage: CreateContainerImage
