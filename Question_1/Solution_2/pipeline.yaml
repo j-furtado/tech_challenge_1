@@ -16,7 +16,9 @@ pr: none
 
 variables:
   ACR_CONNECTION_NAME: 'ACR_CHALLENGE'
-  IMAGE_NAME: 'spark-sample'
+  ACR_URL: 'azcontregxpto.azurecr.io'
+  BRANCH_NAME: 'branch-2.3'
+  IMAGE_NAME: 'spark'
 
 stages:
 - stage: CreateContainerImage
@@ -38,10 +40,16 @@ stages:
       inputs:
         containerRegistry: $(ACR_CONNECTION_NAME)
         command: login
+    - bash: |
+        git clone -b $(BRANCH_NAME) https://github.com/apache/spark
+        cd spark
+        sparkdir=$(pwd)
+        ./build/mvn -Pkubernetes -DskipTests clean package
+        ./bin/docker-image-tool.sh -r $(ACR_URL) -t $(Build.BuildId) build
     - task: Docker@2
-      displayName: Build container image and push it to ACR
+      displayName: Push image to ACR
       inputs:
         containerRegistry: $(ACR_CONNECTION_NAME)
-        repository: $(IMAGE_NAME)
-        Dockerfile: 'Question_1/Solution_2/Dockerfile'
+        repository: $(ACR_URL)/$(IMAGE_NAME)
+        Dockerfile: 'spark/kubernetes/dockerfiles/Dockerfile'
         tags: '$(Build.BuildId)'
