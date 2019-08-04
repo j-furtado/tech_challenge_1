@@ -1,4 +1,4 @@
-FROM openjdk:14-jdk
+FROM openjdk:12
 
 # Install maven
 RUN apt update
