@@ -8,7 +8,7 @@ trigger:
     - master
   paths:
     include: 
-      - Question/Solution_2/*
+      - Question_1/Solution_2/*
     exclude:
       - /*
 # will disable PR builds
