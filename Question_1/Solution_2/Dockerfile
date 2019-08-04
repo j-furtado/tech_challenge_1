@@ -1,8 +1,8 @@
-FROM openjdk:12
+FROM openjdk:8-jdk-slim
 
 # Install maven
-RUN apt update
-RUN apt install -y maven
+RUN apt-get update
+RUN apt-get install -y maven
 
 WORKDIR /code
 
