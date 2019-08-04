@@ -197,23 +197,23 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
 Open [Azure portal](https://portal.azure.com) and navigate to Azure DataBricks service. You should now see your new Workspace.
 
-![Azure Dashboard](imgs\azure_db.png "Azure Dashboard")
+![Azure Dashboard](imgs/azure_db.png "Azure Dashboard")
 
 To login, press the Launch Workspace. It may take a while to open or fail the first couple of tries. If that happens, wait a bit for the workspace creation.
 
-![Azure DataBricks login](imgs\databricks_login.png "Azure DataBricks login")
+![Azure DataBricks login](imgs/databricks_login.png "Azure DataBricks login")
 
 If you can't login because your user is not allowed, you may need to either add your user as the owner for your application (refer to the Credentials setup) or add your user to the resource as an owner or contributor.
 
 Once you login, you should see the Data Bricks dashboard:
 
-![Azure DataBricks Dashboard](imgs\databricks_dash.png "Azure DataBricks Dashboard")
+![Azure DataBricks Dashboard](imgs/databricks_dash.png "Azure DataBricks Dashboard")
 
 You'll need to create a token for the next part. This token will allow the automated creation of clusters inside the workspace.
 
 To do this, press the user button on the top right corner and select **User Settings**.
 
-![Token Creation](imgs\token_creation.png "Token Creation")
+![Token Creation](imgs/token_creation.png "Token Creation")
 
 Press the **Generate New Token** and don't forget to *save the token*. You will not be able to access it after you press DONE.
 
@@ -249,7 +249,7 @@ python create_cluster.py -w westeurope -t <token> -c databricks_cluster.json
 
 If the script is successful, you'll receive the cluster ID as an output: `Cluster created with ID: 0803-163345-cove899`
 
-![Cluster Creation](imgs\cluster_creation.png "Cluster Creation")
+![Cluster Creation](imgs/cluster_creation.png "Cluster Creation")
 
 ## Cleanup
 
