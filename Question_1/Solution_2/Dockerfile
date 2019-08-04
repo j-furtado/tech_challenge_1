@@ -1,4 +1,4 @@
-FROM openjdk:8-slim
+FROM openjdk:14-jdk
 
 # Install maven
 RUN apt-get update
